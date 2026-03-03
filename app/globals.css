@@ -1,47 +1,57 @@
 @import "tailwindcss";
 
 @theme {
-  /* Configuration des couleurs personnalisées */
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
-  --color-dark-bg: #0f172a;
-  --color-dark-card: #1e293b;
-  --color-dark-text: #e2e8f0;
+  /* ─── Couleur de marque ─── */
+  --color-brand: #10b981; /* émeraude vif — couleur principale */
+  --color-brand-dark: #059669; /* émeraude foncé — hover/active */
+  --color-brand-light: #34d399; /* menthe — accents, glow */
 
-  /* Variables pour le mode sombre */
-  --color-background: #ffffff;
-  --color-foreground: #0f172a;
-}
+  /* ─── Surfaces (backgrounds) ─── */
+  --color-bg: #f0fdf4; /* fond page light */
+  --color-surface: #ffffff; /* cartes, formulaires light */
+  --color-surface-alt: #dcfce7; /* sections alternées light */
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #0f172a;
-    --color-foreground: #e2e8f0;
-  }
+  /* ─── Textes ─── */
+  --color-text: #052e16; /* texte principal light */
+  --color-text-muted: #166534; /* texte secondaire light */
+  --color-text-subtle: #4ade80; /* placeholders, hints light */
+
+  /* ─── Bordures ─── */
+  --color-border: rgb(16 185 129 / 0.2);
+
+  /* ─── Dark mode ─── */
+  --color-bg-dark: #0a0f0d;
+  --color-surface-dark: #111a14;
+  --color-surface-alt-dark: rgb(17 26 20 / 0.5);
+  --color-text-dark: #d1fae5;
+  --color-text-muted-dark: #6ee7b7;
+  --color-border-dark: rgb(52 211 153 / 0.12);
+
+  /* ─── États fonctionnels ─── */
+  --color-success: #10b981;
+  --color-success-bg: #d1fae5;
+  --color-error: #ef4444;
+  --color-error-bg: #fee2e2;
 }
 
 @layer base {
   * {
-    border-color: rgb(226 232 240 / 0.2);
+    border-color: var(--color-border);
   }
-
   .dark * {
-    border-color: rgb(51 65 85 / 0.2);
+    border-color: var(--color-border-dark);
   }
-
   body {
-    background-color: white;
-    color: rgb(15 23 42);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     transition:
       background-color 300ms,
       color 300ms;
   }
-
   .dark body {
-    background-color: rgb(15 23 42);
-    color: rgb(226 232 240);
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-dark);
   }
-
   html {
     scroll-behavior: smooth;
   }
@@ -50,22 +60,110 @@
 @layer utilities {
   .section-container {
     max-width: 72rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: 5rem;
   }
 
+  /* Gradient de marque */
   .gradient-text {
     background-image: linear-gradient(
-      to right,
-      rgb(37 99 235),
-      rgb(147 51 234)
+      135deg,
+      var(--color-brand),
+      var(--color-brand-light),
+      #6ee7b7
     );
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  /* ── Surfaces ── */
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .dark .bg-surface {
+    background-color: var(--color-surface-dark);
+  }
+
+  .bg-surface-alt {
+    background-color: var(--color-surface-alt);
+  }
+  .dark .bg-surface-alt {
+    background-color: var(--color-surface-alt-dark);
+  }
+
+  /* ── Textes ── */
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+  .dark .text-muted {
+    color: var(--color-text-muted-dark);
+  }
+
+  /* ── Marque ── */
+  .text-brand {
+    color: var(--color-brand);
+  }
+  .bg-brand {
+    background-color: var(--color-brand);
+  }
+  .bg-brand-hover:hover {
+    background-color: var(--color-brand-dark);
+  }
+  .border-brand {
+    border-color: var(--color-brand);
+  }
+
+  /* ── Tinted backgrounds (icônes, badges) ── */
+  .bg-brand-tint {
+    background-color: rgb(16 185 129 / 0.12);
+  }
+  .dark .bg-brand-tint {
+    background-color: rgb(16 185 129 / 0.18);
+  }
+
+  /* ── États ── */
+  .bg-success {
+    background-color: var(--color-success-bg);
+  }
+  .text-success {
+    color: var(--color-success);
+  }
+  .bg-error {
+    background-color: var(--color-error-bg);
+  }
+  .text-error {
+    color: var(--color-error);
+  }
+  .dark .bg-success {
+    background-color: rgb(16 185 129 / 0.15);
+  }
+  .dark .bg-error {
+    background-color: rgb(239 68 68 / 0.15);
+  }
+
+  /* ── Curseur pointeur global sur tous les éléments interactifs ── */
+  a,
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  /* ── Placeholder dark mode ── */
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: var(--color-text-muted-dark);
+    opacity: 0.6;
+  }
+
+  /* ── Ombre portée dark mode pour les cartes ── */
+  .card-shadow {
+    box-shadow: 0 4px 24px 0 rgb(0 0 0 / 0.18);
+  }
+  .dark .card-shadow {
+    box-shadow:
+      0 4px 32px 0 rgb(16 185 129 / 0.08),
+      0 1px 4px 0 rgb(0 0 0 / 0.5);
   }
 }

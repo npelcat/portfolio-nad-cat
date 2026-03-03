@@ -18,16 +18,12 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
-
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", subject: "", message: "" });
@@ -46,16 +42,43 @@ export default function Contact() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const inputClass = `
+    w-full px-4 py-3 rounded-lg outline-none transition-all
+    border border-slate-300 dark:border-slate-700
+    bg-white dark:bg-slate-800/60
+    text-foreground
+    placeholder:text-slate-400 dark:placeholder:text-emerald-200/40
+    focus:ring-2 focus:ring-brand focus:border-transparent
+  `;
+
+  const fields = [
+    {
+      id: "name",
+      label: "Nom complet",
+      type: "text",
+      placeholder: "Jean Dupont",
+    },
+    {
+      id: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "jean.dupont@example.com",
+    },
+    {
+      id: "subject",
+      label: "Sujet",
+      type: "text",
+      placeholder: "Opportunité professionnelle",
+    },
+  ];
 
   return (
     <section
       id="contact"
-      className="section-container bg-slate-50 dark:bg-slate-900/50"
+      className="section-container bg-surface-alt dark:bg-surface-alt"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -66,12 +89,11 @@ export default function Contact() {
         <h2 className="text-4xl font-bold text-center mb-4">
           Me <span className="gradient-text">Contacter</span>
         </h2>
-        <p className="text-center text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted dark:text-muted mb-12 max-w-2xl mx-auto">
           Une question ? Un projet ? N&apos;hésitez pas à me contacter
         </p>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -83,44 +105,49 @@ export default function Contact() {
               <h3 className="text-2xl font-bold mb-6">
                 Parlons de votre projet
               </h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-8">
+              <p className="text-muted dark:text-muted mb-8">
                 Je suis actuellement en alternance et à l&apos;écoute
                 d&apos;opportunités professionnelles pour septembre 2026.
-                N&apos;hésitez pas à me contacter pour échanger !
               </p>
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                  <Mail className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              {[
+                {
+                  icon: Mail,
+                  label: "Email",
+                  content: (
+                    <a
+                      href="mailto:pelcat.nd@gmail.com"
+                      className="text-muted dark:text-muted hover:text-brand transition-colors cursor-pointer"
+                    >
+                      pelcat.nd@gmail.com
+                    </a>
+                  ),
+                },
+                {
+                  icon: MapPin,
+                  label: "Localisation",
+                  content: (
+                    <p className="text-muted dark:text-muted">
+                      Paris, Île-de-France
+                    </p>
+                  ),
+                },
+              ].map(({ icon: Icon, label, content }) => (
+                <div key={label} className="flex items-start gap-4">
+                  <div className="p-3 bg-brand-tint dark:bg-brand-tint rounded-lg shrink-0">
+                    <Icon className="w-6 h-6 text-brand" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">{label}</h4>
+                    {content}
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-1">Email</h4>
-                  <a
-                    href="mailto:pelcat.nd@gmail.com"
-                    className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    pelcat.nd@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                  <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-1">Localisation</h4>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Paris, Île-de-France
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </motion.div>
 
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -129,64 +156,28 @@ export default function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-white dark:bg-dark-card rounded-xl p-8 shadow-lg space-y-6"
+              className="bg-surface dark:bg-surface rounded-xl p-8 card-shadow space-y-6"
             >
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Nom complet
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
-                  placeholder="Jean Dupont"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
-                  placeholder="jean.dupont@example.com"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Sujet
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
-                  placeholder="Opportunité professionnelle"
-                />
-              </div>
+              {fields.map(({ id, label, type, placeholder }) => (
+                <div key={id}>
+                  <label
+                    htmlFor={id}
+                    className="block text-sm font-medium mb-2"
+                  >
+                    {label}
+                  </label>
+                  <input
+                    type={type}
+                    id={id}
+                    name={id}
+                    value={formData[id as keyof typeof formData]}
+                    onChange={handleChange}
+                    required
+                    placeholder={placeholder}
+                    className={inputClass}
+                  />
+                </div>
+              ))}
 
               <div>
                 <label
@@ -202,15 +193,17 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none resize-none"
                   placeholder="Votre message..."
+                  className={`${inputClass} resize-none`}
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-brand hover:bg-brand-dark disabled:opacity-50
+                  text-white rounded-lg font-semibold transition-all cursor-pointer
+                  hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/30 flex items-center justify-center gap-2"
               >
                 {status === "loading" ? (
                   "Envoi en cours..."
@@ -223,13 +216,12 @@ export default function Contact() {
               </button>
 
               {status === "success" && (
-                <div className="p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg text-center">
+                <div className="p-4 bg-success dark:bg-success text-success rounded-lg text-center">
                   Message envoyé avec succès ! Je vous répondrai rapidement.
                 </div>
               )}
-
               {status === "error" && (
-                <div className="p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-lg text-center">
+                <div className="p-4 bg-error dark:bg-error text-error rounded-lg text-center">
                   Une erreur est survenue. Veuillez réessayer.
                 </div>
               )}

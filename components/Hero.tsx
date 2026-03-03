@@ -23,7 +23,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="inline-block mb-6"
           >
-            <span className="px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium">
+            <span className="px-4 py-2 rounded-full bg-brand-tint dark:bg-brand-tint text-brand text-sm font-medium">
               Développeuse Fullstack
             </span>
           </motion.div>
@@ -41,7 +41,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-muted dark:text-muted mb-8 max-w-3xl mx-auto"
           >
             Développeuse fullstack spécialisée en React, TypeScript et Python.
             <br />
@@ -56,21 +56,21 @@ export default function Hero() {
           >
             <a
               href="#contact"
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+              className="px-8 py-3 bg-brand hover:bg-brand-dark text-white rounded-lg font-semibold transition-all cursor-pointer hover:shadow-lg hover:shadow-brand/30 hover:-translate-y-0.5"
             >
               Me contacter
             </a>
             <a
               href="/cv/cv_developpeuse_pelcat_2026.pdf"
               download
-              className="px-8 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg font-medium transition-colors"
+              className="px-8 py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-semibold transition-all cursor-pointer hover:-translate-y-0.5"
             >
               Télécharger CV français
             </a>
             <a
               href="/cv/resume_developer_pelcat_2026.pdf"
               download
-              className="px-8 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg font-medium transition-colors"
+              className="px-8 py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-semibold transition-all cursor-pointer hover:-translate-y-0.5"
             >
               Download English Resume
             </a>
@@ -86,7 +86,7 @@ export default function Hero() {
               href="https://github.com/npelcat"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
               aria-label="GitHub"
             >
               <Image
@@ -94,14 +94,14 @@ export default function Hero() {
                 alt="logo GitHub"
                 width={24}
                 height={24}
-                className="dark:invert"
+                className="dark:invert group-hover:invert transition-all"
               />
             </a>
             <a
               href="https://www.linkedin.com/in/nadege-pelcat/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
               aria-label="LinkedIn"
             >
               <Image
@@ -109,12 +109,12 @@ export default function Hero() {
                 alt="logo LinkedIn"
                 width={24}
                 height={24}
-                className="dark:invert"
+                className="dark:invert group-hover:invert transition-all"
               />
             </a>
             <a
               href="mailto:pelcat.nd@gmail.com"
-              className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
               aria-label="Email"
             >
               <Image
@@ -122,7 +122,7 @@ export default function Hero() {
                 alt="logo email"
                 width={24}
                 height={24}
-                className="dark:invert"
+                className="dark:invert group-hover:invert transition-all"
               />
             </a>
           </motion.div>
@@ -135,7 +135,7 @@ export default function Hero() {
           >
             <a
               href="#experience"
-              className="animate-bounce text-slate-400 dark:text-slate-600"
+              className="animate-bounce text-brand cursor-pointer hover:opacity-70 transition-opacity"
             >
               <ArrowDown className="w-6 h-6" />
             </a>
