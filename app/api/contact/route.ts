@@ -18,9 +18,9 @@ export async function POST(request: NextRequest) {
 
     // Envoi de l'email via Resend
     const data = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>", // À REMPLACER par votre domaine vérifié
+      from: "Portfolio <onboarding@resend.dev>",
       to: ["pelcat.nd@gmail.com"],
-      replyTo: email, // Email de l'expéditeur pour pouvoir répondre
+      replyTo: email,
       subject: `[Portfolio] ${subject}`,
       html: `
         <!DOCTYPE html>

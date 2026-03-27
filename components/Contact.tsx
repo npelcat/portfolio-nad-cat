@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send } from "lucide-react";
+import { MapPin, Send } from "lucide-react";
 import { useState } from "react";
 
 export default function Contact() {
@@ -45,27 +45,21 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const inputClass = `
-    w-full px-4 py-3 rounded-lg outline-none transition-all
-    border border-slate-300 dark:border-slate-700
-    bg-white dark:bg-slate-800/60
-    text-foreground
-    placeholder:text-slate-400 dark:placeholder:text-emerald-200/40
-    focus:ring-2 focus:ring-brand focus:border-transparent
-  `;
+  const inputClass =
+    "w-full px-4 py-3 rounded-lg outline-none transition-all border border-slate-300 dark:border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-brand focus:border-transparent";
 
   const fields = [
     {
       id: "name",
       label: "Nom complet",
       type: "text",
-      placeholder: "Jean Dupont",
+      placeholder: "Jane Dupont",
     },
     {
       id: "email",
       label: "Email",
       type: "email",
-      placeholder: "jean.dupont@example.com",
+      placeholder: "jane.dupont@example.com",
     },
     {
       id: "subject",
@@ -106,25 +100,13 @@ export default function Contact() {
                 Parlons de votre projet
               </h3>
               <p className="text-muted dark:text-muted mb-8">
-                Je suis actuellement en alternance et à l&apos;écoute
+                Je suis actuellement en poste et à l&apos;écoute
                 d&apos;opportunités professionnelles pour septembre 2026.
               </p>
             </div>
 
             <div className="space-y-6">
               {[
-                {
-                  icon: Mail,
-                  label: "Email",
-                  content: (
-                    <a
-                      href="mailto:pelcat.nd@gmail.com"
-                      className="text-muted dark:text-muted hover:text-brand transition-colors cursor-pointer"
-                    >
-                      pelcat.nd@gmail.com
-                    </a>
-                  ),
-                },
                 {
                   icon: MapPin,
                   label: "Localisation",

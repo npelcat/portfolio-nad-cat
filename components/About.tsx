@@ -38,7 +38,7 @@ export default function About() {
                 l&apos;
                 <strong>esprit d&apos;équipe</strong> acquis dans des contextes
                 exigeants sont aujourd&apos;hui des atouts dans mon quotidien de
-                développeuse.
+                dev.
               </p>
               <p className="text-lg text-muted dark:text-muted">
                 Développeuse curieuse et passionnée, je recherche une équipe où

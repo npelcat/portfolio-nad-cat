@@ -21,11 +21,11 @@
 
   /* ─── Dark mode ─── */
   --color-bg-dark: #0a0f0d;
-  --color-surface-dark: #111a14;
-  --color-surface-alt-dark: rgb(17 26 20 / 0.5);
-  --color-text-dark: #d1fae5;
-  --color-text-muted-dark: #6ee7b7;
-  --color-border-dark: rgb(52 211 153 / 0.12);
+  --color-surface-dark: #1c2b20;
+  --color-surface-alt-dark: #152019;
+  --color-text-dark: #e8f5ee;
+  --color-text-muted-dark: #a7c4b0;
+  --color-border-dark: rgb(52 211 153 / 0.15);
 
   /* ─── États fonctionnels ─── */
   --color-success: #10b981;

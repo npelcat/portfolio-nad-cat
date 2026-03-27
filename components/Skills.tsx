@@ -9,10 +9,10 @@ export default function Skills() {
       icon: Code2,
       title: "Frontend",
       skills: [
-        { name: "JavaScript / TypeScript", metric: "2 ans · 5 projets" },
+        { name: "JavaScript / TypeScript", metric: "3 ans · 5 projets" },
         { name: "React / Next.js", metric: "2 ans · 4 projets" },
-        { name: "Redux Toolkit", metric: "1 an · 1 projet pro" },
-        { name: "Material UI / Tailwind CSS", metric: "1 an · 3 projets" },
+        { name: "Redux Toolkit", metric: "2 an · 1 projet pro" },
+        { name: "Material UI / Tailwind CSS", metric: "2 an · 3 projets" },
         { name: "HTML / CSS", metric: "3 ans · tous projets" },
       ],
     },
@@ -20,10 +20,10 @@ export default function Skills() {
       icon: Database,
       title: "Backend & Data",
       skills: [
-        { name: "Python / FastAPI", metric: "1 an · 1 projet pro" },
+        { name: "Python / FastAPI", metric: "2 ans · 1 projet pro" },
         { name: "Node.js / NestJS", metric: "6 mois · 2 projets" },
-        { name: "PostgreSQL / MySQL", metric: "1 an · 3 projets" },
-        { name: "Redis", metric: "1 an · 1 projet pro" },
+        { name: "PostgreSQL / MySQL", metric: "2 ans · 3 projets" },
+        { name: "Redis", metric: "2 ans · 1 projet pro" },
         { name: "API REST", metric: "2 ans · 5 projets" },
       ],
     },
@@ -31,20 +31,20 @@ export default function Skills() {
       icon: Cloud,
       title: "DevOps & Cloud",
       skills: [
-        { name: "AWS", metric: "1 an · 1 projet pro" },
-        { name: "Git / GitLab", metric: "2 ans · tous projets" },
-        { name: "CI/CD", metric: "1 an · 1 projet pro" },
-        { name: "Docker", metric: "6 mois · 2 projets" },
+        { name: "AWS", metric: "2 ans · 1 projet pro" },
+        { name: "Git / Github / GitLab", metric: "3 ans · tous projets" },
+        { name: "CI/CD", metric: "2 ans · 2 projets" },
+        { name: "Docker", metric: "2 ans · 2 projets" },
       ],
     },
     {
       icon: Wrench,
       title: "Méthodologie & Outils",
       skills: [
-        { name: "Agile / SCRUM", metric: "1 an · EDF Power Solutions" },
-        { name: "Tests (Jest, pytest)", metric: "1 an · 2 projets" },
-        { name: "Jira / Confluence", metric: "1 an · quotidien" },
-        { name: "Figma / Canva", metric: "1 an · 3 projets" },
+        { name: "Agile / SCRUM", metric: "2 ans · EDF Power Solutions" },
+        { name: "Tests (Jest, pytest)", metric: "2 ans · 2 projets" },
+        { name: "Jira / Confluence", metric: "2 ans · quotidien" },
+        { name: "Figma / Canva", metric: "2 ans · 3 projets" },
       ],
     },
   ];
@@ -53,6 +53,7 @@ export default function Skills() {
     "Collaboration en équipe",
     "Autonomie",
     "Apprentissage continu",
+    "Résolution de problèmes",
     "Communication technique",
     "Écoute active",
     "Adaptabilité",
@@ -75,7 +76,7 @@ export default function Skills() {
           <span className="gradient-text">Compétences</span>
         </h2>
         <p className="text-center text-muted dark:text-muted mb-12 max-w-2xl mx-auto">
-          Technologies et méthodologies que je maîtrise
+          Technologies et méthodologies maîtrisées
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">

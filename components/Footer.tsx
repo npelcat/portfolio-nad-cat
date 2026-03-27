@@ -18,8 +18,8 @@ export default function Footer() {
               style={{ color: "var(--color-text-muted-dark)" }}
             >
               Passionnée par le développement web et la création
-              d&apos;applications performantes. Actuellement en alternance chez
-              EDF Power Solutions.
+              d&apos;applications performantes. Actuellement en poste chez EDF
+              Power Solutions.
             </p>
           </div>
 
