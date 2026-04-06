@@ -6,7 +6,11 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Portfolio - Développeuse Fullstack",
+  title: "Portfolio Nadège PELCAT - Développeuse Fullstack",
+  icons: {
+    icon: "/icons/favicon-32x32.png",
+    apple: "/icons/apple-touch-icon.png",
+  },
   description:
     "Portfolio de développeuse fullstack spécialisée en React, TypeScript et Python. Actuellement en alternance chez EDF Power Solutions.",
   keywords: [
@@ -20,7 +24,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Nadège Pelcat" }],
   openGraph: {
-    title: "Portfolio - Développeuse Fullstack",
+    title:
+      "Portfolio Nadège PELCAT - Développeuse Fullstack Paris et Région Parisienne",
     description:
       "Développeuse fullstack passionnée par les technologies web modernes",
     type: "website",
