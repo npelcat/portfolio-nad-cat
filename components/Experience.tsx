@@ -11,7 +11,7 @@ const experiences = [
     label: "Data Visualisation · 320 parcs · temps réel",
     period: "Sept 2024 - Présent",
     team: "4 devs seniors · 2 designers · 1 Product Owner",
-    screenshot: "/screenshots/edf-dashboard.png",
+    screenshot: "/mynsights.png",
     description:
       "Application de data visualisation et développement d'outils pour la supervision d'environ 320 parcs éoliens et solaires internationaux (~200 utilisateurs actifs/mois), intégrant des flux temps réel via API externes (PI, Genesys) et multiples API internes.",
     achievements: [
@@ -57,7 +57,7 @@ const experiences = [
   {
     title: "Conception & Développement Fullstack (Titre RNCP 6)",
     company: "Ada Tech School / O’Sun Voix Animale",
-    label: "Architecture en couches · Sécurité OWASP · Client Réel",
+    label: "Architecture en couches ·Next.js · Client Réel",
     period: "2024 - Présent",
     type: "Projet de Certification",
     screenshot: "/couvertureosun.jpg",

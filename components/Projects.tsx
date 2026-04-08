@@ -67,7 +67,7 @@ const projects: Project[] = [
       "Redux Toolkit",
       "MUI",
     ],
-    screenshot: null, // → Remplacer par "/screenshots/dashboard-edf.png"
+    screenshot: "/dashboard-full-web.png",
     screenshotAlt: "Dashboard EDF MyNSights",
     visual: { icon: "📊", gradient: "from-emerald-800 to-teal-700" },
     githubNote: "Code propriétaire — non disponible publiquement",
@@ -106,7 +106,7 @@ const projects: Project[] = [
       "Drizzle ORM",
       "Cloudflare Turnstile",
     ],
-    screenshot: "/dashboardlocal.jpg", // → Remplacer par "/screenshots/admin-reservation.png"
+    screenshot: "/dashboardlocal.jpg",
     screenshotAlt: "Interface admin — gestion des réservations",
     visual: { icon: "🔐", gradient: "from-teal-700 to-emerald-600" },
     link: {
@@ -147,7 +147,7 @@ const projects: Project[] = [
       "ECharts",
       "API PI",
     ],
-    screenshot: null, // → Remplacer par "/screenshots/monitoring-solaire.png"
+    screenshot: "/live-monitoring.png",
     screenshotAlt: "Live monitoring solaire — EDF",
     visual: { icon: "⚡", gradient: "from-emerald-700 to-green-800" },
     githubNote: "Code propriétaire — non disponible publiquement",
