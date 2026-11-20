@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, Github, Linkedin, Mail } from "lucide-react";
+import { AVAILABILITY } from "@/lib/availability";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,8 +19,7 @@ export default function Footer() {
               style={{ color: "var(--color-text-muted-dark)" }}
             >
               Passionnée par le développement web et la création
-              d&apos;applications performantes. Actuellement en poste chez EDF
-              Power Solutions.
+              d&apos;applications performantes. {AVAILABILITY.current}.
             </p>
           </div>
 

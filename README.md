@@ -1,93 +1,57 @@
-# Nadège Pelcat — Developer Portfolio
+# Nadège Pelcat — Portfolio
 
-My personal portfolio, built from scratch to present my journey, technical skills and projects as a fullstack developer.
+Personal portfolio of a fullstack developer (React, TypeScript, Python, NestJS).
 
-🌐 **[nadegepelcat.com](#)**
+Live site: [nadegepelcat.com](https://www.nadegepelcat.com/)
 
----
+## About
 
-## About this project
+I built this site on my own, from design to deployment, to present my experience and projects. Before moving into development in 2023, I worked for 11 years as a veterinary nurse. Since then I have trained at Ada Tech School and worked at EDF Power Solutions, first as an apprentice, then on a contract mission.
 
-I built this portfolio during my time as a fullstack developer apprentice at EDF Power Solutions.  
-It was a good opportunity to work on something entirely mine — from design decisions to deployment — outside of a team environment.
+## Technical choices
 
-I come from a non-traditional background (11 years as a veterinary nurse before switching to tech in 2023), and I wanted this portfolio to reflect both my technical growth and who I am.
-
----
-
-## Technical choices worth mentioning
-
-**Tailwind CSS v4 with a custom design system**  
-All colors, surfaces and states are defined as CSS variables in a single `globals.css` file. Changing the entire color theme only requires editing that one file — no hunting through components.
-
-**Dark mode done properly**  
-Handled via `next-themes` with system preference detection. No flash on load (`suppressHydrationWarning` on `<html>`), smooth transition on toggle.
-
-**Contact form with Resend**  
-Instead of a classic `mailto:` link, I built a real API route (`/api/contact`) that sends a formatted HTML email via Resend. The form handles loading, success and error states.
-
-**Framer Motion for animations**  
-Scroll-triggered entrance animations on each section, with `viewport={{ once: true }}` so they only play once and don't feel repetitive.
-
-**One-page architecture**  
-Everything lives in a single `page.tsx` with anchor navigation. Simple, fast, and recruiter-friendly.
-
----
+- **Tailwind CSS v4 theme**: colors and surfaces are CSS variables in `app/globals.css`, so the theme is changed in one place.
+- **Dark mode** with `next-themes`, following the system preference without a flash on load.
+- **Contact form**: an API route (`app/api/contact`) sends the message by email with Resend.
+- **Animations** with Framer Motion, played once when a section enters the viewport.
+- **Single page** with anchor navigation.
 
 ## Stack
 
-| Category   | Tools                   |
-| ---------- | ----------------------- |
-| Framework  | Next.js 16 (App Router) |
-| Language   | TypeScript              |
-| Styling    | Tailwind CSS v4         |
-| Animations | Framer Motion           |
-| Dark mode  | next-themes             |
-| Email      | Resend                  |
-| Icons      | Lucide React            |
-| Font       | Inter (Google Fonts)    |
-| Deployment | Vercel                  |
-
----
+Next.js 16 (App Router), TypeScript, Tailwind CSS v4, Framer Motion, next-themes, Resend, Lucide React. Deployed on Vercel.
 
 ## Run locally
 
 ```bash
 npm install
 npm run dev
-# → http://localhost:4000
 ```
 
-Create a `.env.local` file at the root:
+The site runs on http://localhost:4000.
+
+The contact form needs a Resend key in a `.env.local` file at the root:
 
 ```bash
 RESEND_API_KEY=your_resend_api_key
 ```
 
-The contact form won't work without it, but everything else will.
-
----
+Without it, the rest of the site works but `npm run build` fails.
 
 ## Project structure
 
 ```
 app/
-├── page.tsx              # Single page — all sections
-├── layout.tsx            # Metadata, font, ThemeProvider
-├── globals.css           # Design system (colors, custom utilities)
-└── api/contact/          # Email API route
+├── page.tsx          # Single page, all sections
+├── layout.tsx        # Metadata, font, theme provider
+├── globals.css       # Theme (colors, utilities)
+└── api/contact/      # Email API route
 
-components/
-├── Header.tsx            # Fixed nav + dark mode toggle
-├── Hero.tsx              # Landing section + CV download
-├── Experience.tsx        # Work experience
-├── Projects.tsx          # Featured technical projects
-├── Skills.tsx            # Tech stack + soft skills
-├── About.tsx             # Career change story
-├── Contact.tsx           # Contact form
-└── Footer.tsx
+components/           # One component per section (Hero, Experience, Projects...)
+
+lib/
+└── availability.ts   # Job-search status shown in several sections
 
 public/
-├── cv/                   # Downloadable resumes (FR + EN)
-└── screenshots/          # Project screenshots (used in Projects section)
+├── cv/               # Downloadable resumes (FR and EN)
+└── *.png, *.webp     # Project screenshots
 ```

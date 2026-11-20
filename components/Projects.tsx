@@ -15,7 +15,7 @@ interface Project {
   title: string;
   subtitle: string;
   context: string;
-  autonomy: AutonomyLevel;
+  autonomy?: AutonomyLevel;
   description: string;
   achievements: Achievement[];
   tags: string[];
@@ -34,9 +34,62 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: "Chat avec un Agent IA",
+    subtitle: "IA générative · Réponses en streaming",
+    context: "EDF Power Solutions · Mission",
+    description:
+      "Interface de chat permettant d'échanger avec un agent IA directement depuis un outil de data visualisation.",
+    achievements: [
+      {
+        label: "Agent IA (LangChain)",
+        details: "Intégration d'un agent IA construit avec LangChain.",
+      },
+      {
+        label: "Streaming (SSE)",
+        details:
+          "Réponses affichées au fil de l'eau grâce aux Server-Sent Events, sans attendre la réponse complète.",
+      },
+    ],
+    tags: ["React", "TypeScript", "LangChain", "SSE"],
+    screenshot: "/chat-agent-ia.png",
+    screenshotAlt: "Chat avec l'agent IA dans l'outil de data visualisation",
+    visual: { icon: "🤖", gradient: "from-emerald-800 to-teal-700" },
+    githubNote: "Code propriétaire — non disponible publiquement",
+  },
+  {
+    title: "Design System React",
+    subtitle: "~50 composants · 4 applications",
+    context: "EDF Power Solutions · Mission",
+    autonomy: "solo",
+    description:
+      "Bibliothèque de composants partagée par 4 applications de la plateforme data, construite et documentée avec l'équipe design.",
+    achievements: [
+      {
+        label: "Composants & thème",
+        details:
+          "Une cinquantaine de composants MUI et de hooks, thème light/dark basé sur des design tokens.",
+      },
+      {
+        label: "Publication",
+        details:
+          "Package publié sur un registre npm privé, versions automatisées avec semantic-release.",
+      },
+      {
+        label: "Collaboration design",
+        details:
+          "Prise d'initiative auprès des designers : Figma commun, ateliers devs-designers, documentation des composants dans Storybook.",
+      },
+    ],
+    tags: ["React", "TypeScript", "MUI", "Storybook", "semantic-release", "Figma"],
+    screenshot: "/design-system-storybook.webp",
+    screenshotAlt: "Storybook du design system",
+    visual: { icon: "🎨", gradient: "from-teal-700 to-emerald-600" },
+    githubNote: "Code propriétaire — non disponible publiquement",
+  },
+  {
     title: "Refonte d'un Dashboard Métier",
     subtitle: "POC — Migration Tableau → Application web",
-    context: "EDF Power Solutions · Autonomie totale",
+    context: "EDF Power Solutions · Alternance",
     autonomy: "solo",
     description:
       "POC réalisé en 12 jours : reconstruire un dashboard Tableau existant en application web intégrée à la plateforme Mynsights (Typescript / Python), avec des données en cours de migration Power BI. Collaboration active avec l'équipe data.",
@@ -115,12 +168,12 @@ const projects: Project[] = [
     },
   },
   {
-    title: "Live Monitoring",
-    subtitle: "Données temps réel · 320 parcs · Run & debug",
-    context: "EDF Power Solutions",
+    title: "Live Monitoring Solaire",
+    subtitle: "Données temps réel · Parcs solaires · Run & debug",
+    context: "EDF Power Solutions · Alternance",
     autonomy: "binome",
     description:
-      "Développement et maintien en conditions opérationnelles d'un système de monitoring temps réel pour ~ 320 parcs (wind/solar), intégré à la plateforme de data visualisation (~200 utilisateurs/mois). Gestion du run sur cette feature : investigation et résolution des bugs remontés par les utilisateurs.",
+      "Développement et maintien en conditions opérationnelles du volet solaire d'un système de monitoring temps réel (le volet éolien existait déjà), intégré à la plateforme de data visualisation (~400 utilisateurs/mois). Utilisé par les asset managers pour repérer les anomalies des parcs. Gestion du run sur cette feature : investigation et résolution des bugs remontés par les utilisateurs.",
     achievements: [
       {
         label: "Jobs de collecte (Python)",
@@ -242,7 +295,9 @@ export default function Projects() {
                       {project.subtitle}
                     </p>
                   </div>
-                  <AutonomyBadge level={project.autonomy} />
+                  {project.autonomy && (
+                    <AutonomyBadge level={project.autonomy} />
+                  )}
                 </div>
 
                 <p className="text-xs text-muted dark:text-muted mb-3 font-medium">

@@ -1,55 +1,71 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Database, Cloud, Wrench } from "lucide-react";
+import { Code2, Server, Sparkles, Database, Wrench } from "lucide-react";
 
 export default function Skills() {
+  // A start year never gets outdated, unlike a hardcoded duration.
   const skillCategories = [
     {
       icon: Code2,
-      title: "Frontend",
+      title: "Front-end",
       skills: [
-        { name: "JavaScript / TypeScript", metric: "3 ans · 5 projets" },
-        { name: "React / Next.js", metric: "2 ans · 4 projets" },
-        { name: "Redux Toolkit", metric: "2 an · 1 projet pro" },
-        { name: "Material UI / Tailwind CSS", metric: "2 an · 3 projets" },
-        { name: "HTML / CSS", metric: "3 ans · tous projets" },
+        { name: "JavaScript / TypeScript", since: 2023 },
+        { name: "React / Next.js", since: 2023 },
+        { name: "Redux Toolkit", since: 2024 },
+        { name: "MUI / Tailwind CSS", since: 2024 },
+        { name: "Storybook", since: 2024 },
+        { name: "ECharts", since: 2024 },
+      ],
+    },
+    {
+      icon: Server,
+      title: "Back-end",
+      skills: [
+        { name: "Python / FastAPI", since: 2024 },
+        { name: "Node.js", since: 2023 },
+        { name: "NestJS", since: 2025 },
+        { name: "API REST", since: 2023 },
+        { name: "SQL", since: 2023 },
+      ],
+    },
+    {
+      icon: Sparkles,
+      title: "IA",
+      skills: [
+        { name: "LangChain", since: 2026 },
+        { name: "Claude Code / Kiro (skills, steering, MCP)", since: 2026 },
       ],
     },
     {
       icon: Database,
-      title: "Backend & Data",
+      title: "Data & Infra",
       skills: [
-        { name: "Python / FastAPI", metric: "2 ans · 1 projet pro" },
-        { name: "Node.js / NestJS", metric: "6 mois · 2 projets" },
-        { name: "PostgreSQL / MySQL", metric: "2 ans · 3 projets" },
-        { name: "Redis", metric: "2 ans · 1 projet pro" },
-        { name: "API REST", metric: "2 ans · 5 projets" },
-      ],
-    },
-    {
-      icon: Cloud,
-      title: "DevOps & Cloud",
-      skills: [
-        { name: "AWS", metric: "2 ans · 1 projet pro" },
-        { name: "Git / Github / GitLab", metric: "3 ans · tous projets" },
-        { name: "CI/CD", metric: "2 ans · 2 projets" },
-        { name: "Docker", metric: "2 ans · 2 projets" },
+        { name: "PostgreSQL", since: 2023 },
+        { name: "Redis", since: 2024 },
+        { name: "Databricks", since: 2026 },
+        { name: "AWS", since: 2024 },
+        { name: "Docker", since: 2024 },
+        { name: "CI/CD GitLab", since: 2024 },
       ],
     },
     {
       icon: Wrench,
-      title: "Méthodologie & Outils",
+      title: "Méthodes & Outils",
       skills: [
-        { name: "Agile / SCRUM", metric: "2 ans · EDF Power Solutions" },
-        { name: "Tests (Jest, pytest)", metric: "2 ans · 2 projets" },
-        { name: "Jira / Confluence", metric: "2 ans · quotidien" },
-        { name: "Figma / Canva", metric: "2 ans · 3 projets" },
+        { name: "Tests (Jest, pytest)", since: 2024 },
+        { name: "Agile (SAFe, Scrum)", since: 2023 },
+        { name: "Git", since: 2023 },
+        { name: "Jira / Confluence", since: 2024 },
+        { name: "Figma", since: 2024 },
       ],
     },
   ];
 
   const softSkills = [
+    "Vision produit",
+    "Communication avec le métier",
+    "Pédagogie",
     "Collaboration en équipe",
     "Autonomie",
     "Apprentissage continu",
@@ -111,7 +127,7 @@ export default function Skills() {
                       <span className="text-sm font-medium">{skill.name}</span>
                     </div>
                     <span className="text-xs px-2 py-1 bg-brand-tint dark:bg-brand-tint text-brand rounded-full whitespace-nowrap">
-                      {skill.metric}
+                      depuis {skill.since}
                     </span>
                   </motion.div>
                 ))}

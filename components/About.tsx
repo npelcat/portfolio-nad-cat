@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Heart, Code } from "lucide-react";
+import { GraduationCap, Heart, Code, Briefcase } from "lucide-react";
 import Image from "next/image";
 
 export default function About() {
@@ -41,7 +41,8 @@ export default function About() {
 
             <div className="prose dark:prose-invert max-w-none text-lg text-muted dark:text-muted space-y-6">
               <p>
-                Après 14 ans en tant qu&apos;infirmière vétérinaire, j&apos;ai
+                Après 11 ans en tant qu&apos;auxiliaire spécialisée
+                vétérinaire, j&apos;ai
                 choisi de me réorienter vers le développement web pour relever
                 un nouveau défi et nourrir ma soif d&apos;apprentissage.
                 Aujourd&apos;hui, je conçois et développe des applications
@@ -58,8 +59,9 @@ export default function About() {
                 logiciel faisait des siennes. Curieuse, autonome et
                 débrouillarde, j&apos;ai su transformer cette appétence en
                 compétences concrètes grâce à une formation intensive, suivie
-                d&apos;une année d&apos;alternance chez{" "}
-                <strong>EDF Renouvelables</strong>.
+                de deux ans d&apos;alternance chez{" "}
+                <strong>EDF Power Solutions</strong>, où je poursuis
+                aujourd&apos;hui en mission.
               </p>
               <p>
                 Durant mon alternance, j&apos;ai travaillé au sein d&apos;une
@@ -120,14 +122,29 @@ export default function About() {
                 <GraduationCap className="w-6 h-6 text-brand" />
               </div>
               <div>
-                <h3 className="font-bold text-lg mb-2">Sept 2023 - Présent</h3>
+                <h3 className="font-bold text-lg mb-2">Sept 2023 - Sept 2026</h3>
                 <h4 className="font-semibold mb-1">
                   Ada Tech School & Alternance
                 </h4>
                 <p className="text-muted dark:text-muted">
-                  Formation Conceptrice-Développeuse (Bac +3). Alternance de
-                  deux ans chez
+                  Formation Conceptrice-Développeuse (Bac +3), titre obtenu.
+                  Alternance de deux ans chez
                   <strong> EDF Power Solutions</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="shrink-0 w-12 h-12 bg-brand/10 rounded-full flex items-center justify-center">
+                <Briefcase className="w-6 h-6 text-brand" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg mb-2">Sept 2026 - Janv 2027</h3>
+                <h4 className="font-semibold mb-1">Mission Développeuse Fullstack</h4>
+                <p className="text-muted dark:text-muted">
+                  En portage salarial chez
+                  <strong> EDF Power Solutions</strong> : IA générative, design
+                  system et librairie NestJS partagée.
                 </p>
               </div>
             </div>

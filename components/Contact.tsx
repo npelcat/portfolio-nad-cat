@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Send } from "lucide-react";
 import { useState } from "react";
+import { AVAILABILITY } from "@/lib/availability";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -100,8 +101,7 @@ export default function Contact() {
                 Parlons de votre projet
               </h3>
               <p className="text-muted dark:text-muted mb-8">
-                Je suis actuellement en poste et à l&apos;écoute
-                d&apos;opportunités professionnelles pour septembre 2026.
+                {AVAILABILITY.current}. {AVAILABILITY.next}.
               </p>
             </div>
 
