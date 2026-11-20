@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AVAILABILITY } from "@/lib/availability";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,14 +12,14 @@ export const metadata: Metadata = {
     icon: "/icons/favicon-32x32.png",
     apple: "/icons/apple-touch-icon.png",
   },
-  description:
-    "Portfolio de développeuse fullstack spécialisée en React, TypeScript et Python. Actuellement en alternance chez EDF Power Solutions.",
+  description: `Portfolio de développeuse fullstack spécialisée en React, TypeScript, Python et NestJS. ${AVAILABILITY.next}.`,
   keywords: [
     "développeuse",
     "fullstack",
     "React",
     "TypeScript",
     "Python",
+    "NestJS",
     "Next.js",
     "portfolio",
   ],

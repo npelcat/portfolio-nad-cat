@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
+import { AVAILABILITY } from "@/lib/availability";
 
 export default function Hero() {
   return (
@@ -43,9 +44,12 @@ export default function Hero() {
             transition={{ delay: 0.4 }}
             className="text-xl md:text-2xl text-muted dark:text-muted mb-8 max-w-3xl mx-auto"
           >
-            Développeuse fullstack spécialisée en React, TypeScript et Python.
+            Développeuse fullstack spécialisée en React, TypeScript, Python et
+            NestJS.
             <br />
-            Actuellement en poste chez EDF Power Solutions.
+            {AVAILABILITY.current}.
+            <br />
+            <span className="text-brand font-medium">{AVAILABILITY.next}.</span>
           </motion.p>
 
           <motion.div

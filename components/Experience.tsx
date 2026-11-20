@@ -6,14 +6,64 @@ import Image from "next/image";
 
 const experiences = [
   {
+    title: "Développeuse Fullstack",
+    company: "EDF Power Solutions",
+    label: "IA générative · Design system · Plateforme data",
+    period: "Sept 2026 - Janv 2027",
+    type: "Mission en portage salarial",
+    team: "Plateforme data · 50+ ingénieurs · SAFe",
+    screenshot: "/mission-power-vision.webp",
+    description:
+      "Mission au sein d'une plateforme data de plus de 50 ingénieurs : développement de briques partagées par plusieurs applications (front et back) et d'une interface de chat avec un agent IA.",
+    achievements: [
+      {
+        title: "IA générative",
+        details:
+          "Interface de chat avec un agent IA (LangChain), réponses en streaming (SSE), outil de data visualisation.",
+      },
+      {
+        title: "Design system React",
+        details:
+          "Développement et maintenance d'une cinquantaine de composants MUI et de hooks utilisés par 4 applications. Thème light/dark avec design tokens, publication sur un registre npm privé (semantic-release).",
+      },
+      {
+        title: "Librairie NestJS partagée",
+        details:
+          "Création du module d'accès Databricks mutualisé, utilisé par 4 backends.",
+      },
+      {
+        title: "Collaboration avec l'équipe design",
+        details:
+          "Figma commun, documentation des composants dans Storybook, ateliers devs-designers.",
+      },
+      {
+        title: "Autonomie",
+        details:
+          "Création des tickets, développement et déploiement jusqu'en production, en environnement SAFe.",
+      },
+    ],
+    tags: [
+      "React",
+      "TypeScript",
+      "NestJS",
+      "MUI",
+      "Storybook",
+      "LangChain",
+      "Databricks",
+      "SAFe",
+    ],
+    featured: true,
+  },
+  {
     title: "Développeuse Fullstack Applications Web",
     company: "EDF Power Solutions",
     label: "Data Visualisation · 320 parcs · temps réel",
-    period: "Sept 2024 - Présent",
+    period: "Sept 2024 - Sept 2026",
+    type: "Alternance",
     team: "4 devs seniors · 2 designers · 1 Product Owner",
     screenshot: "/mynsights.png",
     description:
-      "Application de data visualisation et développement d'outils pour la supervision d'environ 320 parcs éoliens et solaires internationaux (~200 utilisateurs actifs/mois), intégrant des flux temps réel via API externes (PI, Genesys) et multiples API internes.",
+      "Application de data visualisation et développement d'outils pour la supervision d'environ 320 parcs éoliens et solaires internationaux (~400 utilisateurs actifs/mois), intégrant des flux temps réel via API externes (PI, Genesys) et multiples API internes.",
     achievements: [
       {
         title: "Front-end",
@@ -28,7 +78,7 @@ const experiences = [
       {
         title: "Réalisations clés",
         details:
-          "Développement système de live monitoring solaire. / Refonte complète d'un outil Tableau en full web. ",
+          "Développement du volet solaire du live monitoring, utilisé par les asset managers pour repérer les anomalies des parcs. / POC de refonte d'un dashboard Tableau en application web.",
       },
       {
         title: "Architecture",
@@ -52,14 +102,14 @@ const experiences = [
       "NestJS",
       "SCRUM",
     ],
-    featured: true,
+    featured: false,
   },
   {
     title: "Conception & Développement Fullstack (Titre RNCP 6)",
     company: "Ada Tech School / O’Sun Voix Animale",
     label: "Architecture en couches ·Next.js · Client Réel",
-    period: "2024 - Présent",
-    type: "Projet de Certification",
+    period: "Formation 2023 - 2026",
+    type: "Projet de certification · Titre obtenu",
     screenshot: "/couvertureosun.jpg",
     team: "Autonomie totale (Lead Dev)",
     description:
