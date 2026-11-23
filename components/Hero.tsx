@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import { AVAILABILITY } from "@/lib/availability";
+import { PROFILE } from "@/content/profile";
 
 export default function Hero() {
   return (
@@ -65,14 +66,14 @@ export default function Hero() {
               Me contacter
             </a>
             <a
-              href="/cv/cv_developpeuse_pelcat_2026.pdf"
+              href={PROFILE.cv.fr}
               download
               className="px-8 py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-semibold transition-all cursor-pointer hover:-translate-y-0.5"
             >
               Télécharger CV français
             </a>
             <a
-              href="/cv/resume_developer_pelcat_2026.pdf"
+              href={PROFILE.cv.en}
               download
               className="px-8 py-3 border-2 border-brand text-brand hover:bg-brand hover:text-white rounded-lg font-semibold transition-all cursor-pointer hover:-translate-y-0.5"
             >
@@ -87,7 +88,7 @@ export default function Hero() {
             className="flex gap-6 justify-center mb-16"
           >
             <a
-              href="https://github.com/npelcat"
+              href={PROFILE.links.github}
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
@@ -102,7 +103,7 @@ export default function Hero() {
               />
             </a>
             <a
-              href="https://www.linkedin.com/in/nadege-pelcat/"
+              href={PROFILE.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
@@ -117,7 +118,7 @@ export default function Hero() {
               />
             </a>
             <a
-              href="mailto:pelcat.nd@gmail.com"
+              href={`mailto:${PROFILE.email}`}
               className="p-3 rounded-lg bg-brand-tint dark:bg-brand-tint hover:scale-110 hover:bg-brand group transition-all cursor-pointer"
               aria-label="Email"
             >

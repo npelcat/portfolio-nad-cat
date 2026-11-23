@@ -1,60 +1,82 @@
 @import "tailwindcss";
 
-@theme {
-  /* ─── Couleur de marque ─── */
-  --color-brand: #10b981; /* émeraude vif — couleur principale */
-  --color-brand-dark: #059669; /* émeraude foncé — hover/active */
-  --color-brand-light: #34d399; /* menthe — accents, glow */
+/* Semantic tokens: light values on :root, dark values on .dark (class set by next-themes). */
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --fg: #171717;
+  --fg-muted: #57534e;
+  --line: #e7e5e4;
+  --accent: #1f5f4a;
+  --accent-hover: #174a39;
+  --accent-fg: #fafaf9;
+  --danger: #b91c1c;
+}
 
-  /* ─── Surfaces (backgrounds) ─── */
-  --color-bg: #f0fdf4; /* fond page light */
-  --color-surface: #ffffff; /* cartes, formulaires light */
-  --color-surface-alt: #dcfce7; /* sections alternées light */
+.dark {
+  --bg: #0c0c0b;
+  --surface: #161615;
+  --fg: #ededec;
+  --fg-muted: #a8a29e;
+  --line: #292524;
+  --accent: #7cc4a6;
+  --accent-hover: #9dd5bd;
+  --accent-fg: #0c0c0b;
+  --danger: #f87171;
+}
 
-  /* ─── Textes ─── */
-  --color-text: #052e16; /* texte principal light */
-  --color-text-muted: #166534; /* texte secondaire light */
-  --color-text-subtle: #4ade80; /* placeholders, hints light */
+/* "inline" makes each utility point to the variable itself, so it follows the .dark override. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-danger: var(--danger);
 
-  /* ─── Bordures ─── */
-  --color-border: rgb(16 185 129 / 0.2);
-
-  /* ─── Dark mode ─── */
-  --color-bg-dark: #0a0f0d;
-  --color-surface-dark: #1c2b20;
-  --color-surface-alt-dark: #152019;
-  --color-text-dark: #e8f5ee;
-  --color-text-muted-dark: #a7c4b0;
-  --color-border-dark: rgb(52 211 153 / 0.15);
-
-  /* ─── États fonctionnels ─── */
-  --color-success: #10b981;
-  --color-success-bg: #d1fae5;
-  --color-error: #ef4444;
-  --color-error-bg: #fee2e2;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 @layer base {
   * {
-    border-color: var(--color-border);
-  }
-  .dark * {
-    border-color: var(--color-border-dark);
-  }
-  body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    transition:
-      background-color 300ms,
-      color 300ms;
-  }
-  .dark body {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-dark);
+    border-color: var(--line);
   }
   html {
     scroll-behavior: smooth;
   }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+  a,
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ─── Legacy ───
+   Names used by the old components, mapped onto the new tokens.
+   Delete each one when the last component using it is rewritten. */
+@theme inline {
+  --color-brand: var(--accent);
+  --color-brand-dark: var(--accent-hover);
+  --color-brand-light: var(--accent);
+}
+
+@theme {
+  --color-surface-dark: #161615;
+  --color-text-dark: #ededec;
+  --color-text-muted-dark: #a8a29e;
 }
 
 @layer utilities {
@@ -64,106 +86,34 @@
     padding-inline: 1.5rem;
     padding-block: 5rem;
   }
-
-  /* Gradient de marque */
   .gradient-text {
-    background-image: linear-gradient(
-      135deg,
-      var(--color-brand),
-      var(--color-brand-light),
-      #6ee7b7
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+    color: var(--accent);
   }
-
-  /* ── Surfaces ── */
-  .bg-surface {
-    background-color: var(--color-surface);
-  }
-  .dark .bg-surface {
-    background-color: var(--color-surface-dark);
-  }
-
   .bg-surface-alt {
-    background-color: var(--color-surface-alt);
+    background-color: var(--surface);
   }
-  .dark .bg-surface-alt {
-    background-color: var(--color-surface-alt-dark);
-  }
-
-  /* ── Textes ── */
   .text-muted {
-    color: var(--color-text-muted);
-  }
-  .dark .text-muted {
-    color: var(--color-text-muted-dark);
-  }
-
-  /* ── Marque ── */
-  .text-brand {
-    color: var(--color-brand);
-  }
-  .bg-brand {
-    background-color: var(--color-brand);
+    color: var(--fg-muted);
   }
   .bg-brand-hover:hover {
-    background-color: var(--color-brand-dark);
+    background-color: var(--accent-hover);
   }
-  .border-brand {
-    border-color: var(--color-brand);
-  }
-
-  /* ── Tinted backgrounds (icônes, badges) ── */
   .bg-brand-tint {
-    background-color: rgb(16 185 129 / 0.12);
+    background-color: color-mix(in srgb, var(--accent) 12%, transparent);
   }
-  .dark .bg-brand-tint {
-    background-color: rgb(16 185 129 / 0.18);
-  }
-
-  /* ── États ── */
   .bg-success {
-    background-color: var(--color-success-bg);
+    background-color: color-mix(in srgb, var(--accent) 12%, transparent);
   }
   .text-success {
-    color: var(--color-success);
+    color: var(--accent);
   }
   .bg-error {
-    background-color: var(--color-error-bg);
+    background-color: color-mix(in srgb, var(--danger) 12%, transparent);
   }
   .text-error {
-    color: var(--color-error);
+    color: var(--danger);
   }
-  .dark .bg-success {
-    background-color: rgb(16 185 129 / 0.15);
-  }
-  .dark .bg-error {
-    background-color: rgb(239 68 68 / 0.15);
-  }
-
-  /* ── Curseur pointeur global sur tous les éléments interactifs ── */
-  a,
-  button,
-  [role="button"] {
-    cursor: pointer;
-  }
-
-  /* ── Placeholder dark mode ── */
-  .dark input::placeholder,
-  .dark textarea::placeholder {
-    color: var(--color-text-muted-dark);
-    opacity: 0.6;
-  }
-
-  /* ── Ombre portée dark mode pour les cartes ── */
   .card-shadow {
-    box-shadow: 0 4px 24px 0 rgb(0 0 0 / 0.18);
-  }
-  .dark .card-shadow {
-    box-shadow:
-      0 4px 32px 0 rgb(16 185 129 / 0.08),
-      0 1px 4px 0 rgb(0 0 0 / 0.5);
+    box-shadow: 0 0 0 1px var(--line);
   }
 }
