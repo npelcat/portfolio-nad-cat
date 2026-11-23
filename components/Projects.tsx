@@ -1,166 +1,168 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink, Lock, User, Users, ImageIcon } from "lucide-react";
+import { useState } from "react";
 import Image from "next/image";
-import { projects, type AutonomyLevel, type Project } from "@/content/projects";
+import { ExternalLink, Lock, Plus } from "lucide-react";
+import { projects, type Project, type ProjectRole } from "@/content/projects";
+import Section from "@/components/ui/Section";
+import Tag from "@/components/ui/Tag";
 
-function AutonomyBadge({ level }: { level: AutonomyLevel }) {
-  const isSolo = level === "solo";
+const roleLabels: Record<ProjectRole, string> = {
+  front: "Front-end",
+  back: "Back-end",
+  data: "Data",
+};
+
+const autonomyLabels = {
+  solo: "Autonomie totale",
+  binome: "En binôme",
+};
+
+function ProjectDetails({ project }: { project: Project }) {
+  const meta = [
+    { label: "Rôle", value: project.role.map((r) => roleLabels[r]).join(" · ") },
+    { label: "Contexte", value: project.context },
+    ...(project.autonomy
+      ? [{ label: "Organisation", value: autonomyLabels[project.autonomy] }]
+      : []),
+  ];
+
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold shrink-0 ${
-        isSolo
-          ? "bg-brand-tint text-brand"
-          : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
-      }`}
-    >
-      {isSolo ? <User className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-      {isSolo ? "Autonomie totale" : "En binôme"}
-    </span>
-  );
-}
-
-function CardVisual({ project }: { project: Project }) {
-  if (project.screenshot) {
-    return (
-      <div className="relative h-44 overflow-hidden">
+    <div className="grid gap-10 pb-12 pt-2 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:pl-12">
+      {/* The max width keeps tall images at most 32rem high, and the frame always fits the image. */}
+      <div
+        className="w-full self-start overflow-hidden rounded-lg border border-line bg-surface md:sticky md:top-24"
+        style={{
+          maxWidth: `calc(32rem * ${project.screenshot.width} / ${project.screenshot.height})`,
+        }}
+      >
         <Image
-          src={project.screenshot}
-          alt={project.screenshotAlt ?? project.title}
-          fill
-          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          src={project.screenshot.src}
+          alt={project.screenshot.alt}
+          width={project.screenshot.width}
+          height={project.screenshot.height}
+          sizes="(min-width: 1024px) 520px, 100vw"
+          className="h-auto w-full"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent" />
       </div>
-    );
-  }
 
-  return (
-    <div
-      className={`relative h-44 bg-linear-to-br ${project.visual.gradient}
-        flex flex-col items-center justify-center gap-2`}
-    >
-      <ImageIcon className="w-7 h-7 text-white/50" />
-      <span className="text-white/50 text-xs font-medium tracking-wide">
-        Capture à venir
-      </span>
-      <span className="absolute bottom-3 right-4 text-4xl opacity-15">
-        {project.visual.icon}
-      </span>
-      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+      <div className="flex flex-col gap-8">
+        <p className="leading-relaxed text-fg-muted">{project.description}</p>
+
+        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+          {meta.map(({ label, value }) => (
+            <div key={label} className="contents">
+              <dt className="font-mono text-xs uppercase tracking-wider text-fg-muted leading-5">
+                {label}
+              </dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <ul className="flex flex-col gap-4">
+          {project.achievements.map((achievement) => (
+            <li key={achievement.label} className="text-sm">
+              <p className="font-medium">{achievement.label}</p>
+              <p className="mt-1 leading-relaxed text-fg-muted">
+                {achievement.details}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="flex flex-wrap gap-2" aria-label="Technologies">
+          {project.tags.map((tag) => (
+            <li key={tag}>
+              <Tag>{tag}</Tag>
+            </li>
+          ))}
+        </ul>
+
+        {project.link ? (
+          <a
+            href={project.link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 self-start text-sm font-medium text-accent underline-offset-4 hover:underline"
+          >
+            {project.link.label}
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+          </a>
+        ) : (
+          <p className="inline-flex items-center gap-2 text-xs text-fg-muted">
+            <Lock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            {project.githubNote}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
 
 export default function Projects() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
-    <section id="achievements" className="section-container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-4xl font-bold text-center mb-4">
-          Réalisations <span className="gradient-text">Techniques</span>
-        </h2>
-        <p className="text-center text-muted dark:text-muted mb-12 max-w-2xl mx-auto">
-          Features et projets représentatifs
-        </p>
+    <Section id="projects" title="Projets">
+      <ul className="border-b border-line">
+        {projects.map((project, index) => {
+          const isOpen = openIndex === index;
+          const buttonId = `project-${index}-button`;
+          const panelId = `project-${index}-panel`;
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group bg-surface dark:bg-surface rounded-xl overflow-hidden card-shadow
-                hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 flex flex-col"
-            >
-              <CardVisual project={project} />
-
-              <div className="p-6 flex flex-col flex-1">
-                {/* En-tête */}
-                <div className="flex items-start justify-between gap-2 mb-3 flex-wrap">
-                  <div>
-                    <h3 className="text-lg font-bold leading-tight">
+          return (
+            <li key={project.title} className="border-t border-line">
+              <h3>
+                <button
+                  id={buttonId}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="group flex w-full items-baseline gap-4 py-6 text-left md:gap-8"
+                >
+                  <span className="w-8 shrink-0 font-mono text-xs text-accent">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="flex-1">
+                    <span className="block text-lg font-medium tracking-tight transition-colors group-hover:text-accent md:text-xl">
                       {project.title}
-                    </h3>
-                    <p className="text-xs text-brand font-medium mt-0.5">
+                    </span>
+                    <span className="mt-1 block text-sm text-fg-muted">
                       {project.subtitle}
-                    </p>
-                  </div>
-                  {project.autonomy && (
-                    <AutonomyBadge level={project.autonomy} />
-                  )}
-                </div>
-
-                <p className="text-xs text-muted dark:text-muted mb-3 font-medium">
-                  {project.context}
-                </p>
-
-                <p className="text-sm text-muted dark:text-muted mb-5 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Détails techniques */}
-                <div className="space-y-3 mb-5 flex-1">
-                  {project.achievements.map((achievement, i) => (
-                    <div
-                      key={i}
-                      className="pl-3 border-l-2 border-brand/40 hover:border-brand transition-colors"
-                    >
-                      <p className="text-xs font-semibold text-brand mb-0.5">
-                        {achievement.label}
-                      </p>
-                      <p className="text-xs text-muted dark:text-muted leading-relaxed">
-                        {achievement.details}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800
-                        text-slate-700 dark:text-slate-300 rounded text-xs font-medium"
-                    >
-                      {tag}
                     </span>
-                  ))}
-                </div>
+                  </span>
+                  <span className="hidden text-sm text-fg-muted md:block">
+                    {project.context}
+                  </span>
+                  <Plus
+                    className={`h-5 w-5 shrink-0 self-center text-fg-muted transition-transform duration-300 motion-reduce:transition-none ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
+              </h3>
 
-                {/* Footer */}
-                <div className="pt-3 border-t border-brand/20">
-                  {project.link ? (
-                    <a
-                      href={project.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-brand
-                        hover:opacity-70 transition-opacity font-medium"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      {project.link.label}
-                    </a>
-                  ) : (
-                    <span className="inline-flex items-center gap-2 text-xs text-muted dark:text-muted">
-                      <Lock className="w-3.5 h-3.5 shrink-0" />
-                      {project.githubNote}
-                    </span>
-                  )}
+              {/* Animating grid rows from 0fr to 1fr lets the panel grow to its real height.
+                  overflow-clip (not hidden) hides the overflow without breaking the sticky image. */}
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                inert={!isOpen}
+                className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${
+                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                }`}
+              >
+                <div className="overflow-clip">
+                  <ProjectDetails project={project} />
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-    </section>
+            </li>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }

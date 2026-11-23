@@ -30,7 +30,7 @@ export default function Footer() {
               className="space-y-2 text-sm"
               style={{ color: "var(--color-text-muted-dark)" }}
             >
-              {["experience", "achievements", "skills", "contact"].map(
+              {["experience", "projects", "skills", "contact"].map(
                 (section) => (
                   <li key={section}>
                     <a
@@ -39,8 +39,8 @@ export default function Footer() {
                     >
                       {section === "experience"
                         ? "Expérience"
-                        : section === "achievements"
-                          ? "Réalisations techniques"
+                        : section === "projects"
+                          ? "Projets"
                           : section === "skills"
                             ? "Compétences"
                             : "Contact"}

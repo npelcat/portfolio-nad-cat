@@ -1,5 +1,7 @@
 export type AutonomyLevel = "solo" | "binome";
 
+export type ProjectRole = "front" | "back" | "data";
+
 export interface Achievement {
   label: string;
   details: string;
@@ -9,15 +11,18 @@ export interface Project {
   title: string;
   subtitle: string;
   context: string;
+  // Listed in order of importance for the project.
+  role: ProjectRole[];
   autonomy?: AutonomyLevel;
   description: string;
   achievements: Achievement[];
   tags: string[];
-  screenshot: string | null;
-  screenshotAlt?: string;
-  visual: {
-    icon: string;
-    gradient: string;
+  // Real size of the file, so the image keeps its ratio and is never cropped.
+  screenshot: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
   };
   link?: {
     href: string;
@@ -28,32 +33,52 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Chat avec un Agent IA",
-    subtitle: "IA générative · Réponses en streaming",
-    context: "EDF Power Solutions · Mission",
+    title: "Live Monitoring Solaire",
+    subtitle: "Données temps réel · Parcs solaires · Run & debug",
+    context: "EDF Power Solutions · Alternance",
+    role: ["back", "data", "front"],
+    autonomy: "binome",
     description:
-      "Interface de chat permettant d'échanger avec un agent IA directement depuis un outil de data visualisation.",
+      "Développement et maintien en conditions opérationnelles du volet solaire d'un système de monitoring temps réel (le volet éolien existait déjà), intégré à la plateforme de data visualisation (~400 utilisateurs/mois). Utilisé par les asset managers pour repérer les anomalies des parcs. Gestion du run sur cette feature : investigation et résolution des bugs remontés par les utilisateurs.",
     achievements: [
       {
-        label: "Agent IA (LangChain)",
-        details: "Intégration d'un agent IA construit avec LangChain.",
+        label: "Jobs de collecte (Python)",
+        details:
+          "Récupération des mesures via API PI, transformation et publication dans Redis avec refresh toutes les 10 minutes. Gestion de la concurrence avec sémaphores pour limiter les appels parallèles.",
       },
       {
-        label: "Streaming (SSE)",
+        label: "Visualisation (React / TypeScript)",
         details:
-          "Réponses affichées au fil de l'eau grâce aux Server-Sent Events, sans attendre la réponse complète.",
+          "Intégration dans le front existant avec graphiques ECharts et mise à jour dynamique des données. Feature développée en binôme avec un développeur senior.",
+      },
+      {
+        label: "Run & support",
+        details:
+          "Interlocutrice pour les bugs remontés par les utilisateurs sur cette feature : investigation, correction et communication avec la PO.",
       },
     ],
-    tags: ["React", "TypeScript", "LangChain", "SSE"],
-    screenshot: "/chat-agent-ia.png",
-    screenshotAlt: "Chat avec l'agent IA dans l'outil de data visualisation",
-    visual: { icon: "🤖", gradient: "from-emerald-800 to-teal-700" },
+    tags: [
+      "Python",
+      "FastAPI",
+      "Redis",
+      "React",
+      "TypeScript",
+      "ECharts",
+      "API PI",
+    ],
+    screenshot: {
+      src: "/live-monitoring.png",
+      alt: "Live monitoring solaire — EDF",
+      width: 1911,
+      height: 914,
+    },
     githubNote: "Code propriétaire — non disponible publiquement",
   },
   {
     title: "Design System React",
     subtitle: "~50 composants · 4 applications",
     context: "EDF Power Solutions · Mission",
+    role: ["front"],
     autonomy: "solo",
     description:
       "Bibliothèque de composants partagée par 4 applications de la plateforme data, construite et documentée avec l'équipe design.",
@@ -75,15 +100,52 @@ export const projects: Project[] = [
       },
     ],
     tags: ["React", "TypeScript", "MUI", "Storybook", "semantic-release", "Figma"],
-    screenshot: "/design-system-storybook.webp",
-    screenshotAlt: "Storybook du design system",
-    visual: { icon: "🎨", gradient: "from-teal-700 to-emerald-600" },
+    screenshot: {
+      src: "/design-system-storybook-component.webp",
+      alt: "Page d'un composant du design system dans Storybook, avec ses contrôles",
+      width: 2000,
+      height: 1301,
+    },
+    githubNote: "Code propriétaire — non disponible publiquement",
+  },
+  {
+    title: "Chat avec un agent IA",
+    subtitle: "Interface complète · Streaming de bout en bout",
+    context: "EDF Power Solutions · Mission",
+    role: ["front", "back"],
+    description:
+      "Salle de discussion intégrée à un outil de data visualisation, reliée à un agent IA construit avec LangChain. J'ai conçu et développé toute l'interface du chat, et mis en place le streaming de bout en bout, côté back et côté front.",
+    achievements: [
+      {
+        label: "Interface du chat",
+        details:
+          "Panneau latéral ouvert depuis la barre d'outils, écran d'accueil, zone de saisie, affichage des messages, une seule ligne de statut pendant la génération (conforme à la maquette Figma), historique de la conversation géré dans Redux pour la V0.",
+      },
+      {
+        label: "Streaming (SSE)",
+        details:
+          "Côté back, flux unique et ordonné avec stream() de LangChain (choix argumenté plutôt que streamEvents) ; côté front, réponse affichée au fil de l'eau.",
+      },
+      {
+        label: "Fiabilité",
+        details:
+          "Timeout côté front aligné sur celui du back, limite de messages par discussion avec un bouton « New discussion ».",
+      },
+    ],
+    tags: ["React", "TypeScript", "Redux", "NestJS", "LangChain", "SSE"],
+    screenshot: {
+      src: "/chat-agent-panel-blurred.png",
+      alt: "Panneau de chat avec l'agent IA, avec la ligne de statut pendant la génération",
+      width: 566,
+      height: 1280,
+    },
     githubNote: "Code propriétaire — non disponible publiquement",
   },
   {
     title: "Refonte d'un Dashboard Métier",
     subtitle: "POC — Migration Tableau → Application web",
     context: "EDF Power Solutions · Alternance",
+    role: ["front", "back", "data"],
     autonomy: "solo",
     description:
       "POC réalisé en 12 jours : reconstruire un dashboard Tableau existant en application web intégrée à la plateforme Mynsights (Typescript / Python), avec des données en cours de migration Power BI. Collaboration active avec l'équipe data.",
@@ -114,15 +176,19 @@ export const projects: Project[] = [
       "Redux Toolkit",
       "MUI",
     ],
-    screenshot: "/dashboard-full-web.png",
-    screenshotAlt: "Dashboard EDF MyNSights",
-    visual: { icon: "📊", gradient: "from-emerald-800 to-teal-700" },
+    screenshot: {
+      src: "/dashboard-full-web.png",
+      alt: "Dashboard EDF MyNSights",
+      width: 1178,
+      height: 582,
+    },
     githubNote: "Code propriétaire — non disponible publiquement",
   },
   {
     title: "Plateforme de Réservation",
     subtitle: "Interface admin · Authentification sécurisée",
     context: "Projet client · Soutenance RNCP 6",
+    role: ["back", "front"],
     autonomy: "solo",
     description:
       "Application fullstack pour un client réel (O'Sun Voix Animale), gérée de A à Z : recueil du besoin, conception, développement et déploiement. Focus sur l'espace d'administration et la sécurité (suivi des recommandations OWASP).",
@@ -153,50 +219,15 @@ export const projects: Project[] = [
       "Drizzle ORM",
       "Cloudflare Turnstile",
     ],
-    screenshot: "/dashboardlocal.jpg",
-    screenshotAlt: "Interface admin — gestion des réservations",
-    visual: { icon: "🔐", gradient: "from-teal-700 to-emerald-600" },
+    screenshot: {
+      src: "/dashboardlocal.jpg",
+      alt: "Interface admin — gestion des réservations",
+      width: 1380,
+      height: 906,
+    },
     link: {
       href: "https://www.osun-voixanimale.com/",
       label: "Voir le site",
     },
-  },
-  {
-    title: "Live Monitoring Solaire",
-    subtitle: "Données temps réel · Parcs solaires · Run & debug",
-    context: "EDF Power Solutions · Alternance",
-    autonomy: "binome",
-    description:
-      "Développement et maintien en conditions opérationnelles du volet solaire d'un système de monitoring temps réel (le volet éolien existait déjà), intégré à la plateforme de data visualisation (~400 utilisateurs/mois). Utilisé par les asset managers pour repérer les anomalies des parcs. Gestion du run sur cette feature : investigation et résolution des bugs remontés par les utilisateurs.",
-    achievements: [
-      {
-        label: "Jobs de collecte (Python)",
-        details:
-          "Récupération des mesures via API PI, transformation et publication dans Redis avec refresh toutes les 10 minutes. Gestion de la concurrence avec sémaphores pour limiter les appels parallèles.",
-      },
-      {
-        label: "Visualisation (React / TypeScript)",
-        details:
-          "Intégration dans le front existant avec graphiques ECharts et mise à jour dynamique des données. Feature développée en binôme avec un développeur senior.",
-      },
-      {
-        label: "Run & support",
-        details:
-          "Interlocutrice pour les bugs remontés par les utilisateurs sur cette feature : investigation, correction et communication avec la PO.",
-      },
-    ],
-    tags: [
-      "Python",
-      "FastAPI",
-      "Redis",
-      "React",
-      "TypeScript",
-      "ECharts",
-      "API PI",
-    ],
-    screenshot: "/live-monitoring.png",
-    screenshotAlt: "Live monitoring solaire — EDF",
-    visual: { icon: "⚡", gradient: "from-emerald-700 to-green-800" },
-    githubNote: "Code propriétaire — non disponible publiquement",
   },
 ];

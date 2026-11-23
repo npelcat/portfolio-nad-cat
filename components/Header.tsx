@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { PROFILE } from "@/content/profile";
 
 const navItems = [
-  { name: "Projets", href: "#achievements" },
+  { name: "Projets", href: "#projects" },
   { name: "Parcours", href: "#experience" },
   { name: "Compétences", href: "#skills" },
   { name: "Contact", href: "#contact" },
