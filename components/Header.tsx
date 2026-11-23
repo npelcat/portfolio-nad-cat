@@ -3,17 +3,23 @@
 import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
+import { PROFILE } from "@/content/profile";
+
+const navItems = [
+  { name: "Projets", href: "#projects" },
+  { name: "Parcours", href: "#journey" },
+  { name: "Compétences", href: "#skills" },
+  { name: "Contact", href: "#contact" },
+];
 
 export default function Header() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -30,105 +36,82 @@ export default function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileMenuOpen]);
 
+  // resolvedTheme is the theme really shown, even when the setting is "system".
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
-  const navItems = [
-    { name: "Accueil", href: "#home" },
-    { name: "Expérience", href: "#experience" },
-    { name: "Réalisations techniques", href: "#achievements" },
-    { name: "Compétences", href: "#skills" },
-    { name: "À propos", href: "#about" },
-    { name: "Contact", href: "#contact" },
-  ];
+  // Both icons are rendered and CSS shows the right one, so server and client HTML match.
+  const themeButton = (
+    <button
+      onClick={toggleTheme}
+      className="rounded-md p-2 text-fg-muted transition-colors hover:text-fg"
+      aria-label="Changer de thème"
+    >
+      <Moon className="h-4 w-4 dark:hidden" aria-hidden="true" />
+      <Sun className="hidden h-4 w-4 dark:block" aria-hidden="true" />
+    </button>
+  );
 
   return (
     <header
       ref={menuRef}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-surface dark:bg-surface backdrop-blur-md shadow-md"
-          : "bg-transparent"
+      className={`fixed top-0 z-50 w-full border-b transition-colors duration-300 ${
+        isScrolled || isMobileMenuOpen
+          ? "border-line bg-bg/85 backdrop-blur-md"
+          : "border-transparent"
       }`}
     >
-      <nav className="max-w-6xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <a
-            href="#home"
-            className="text-2xl font-bold gradient-text cursor-pointer hover:opacity-80 transition-opacity"
-          >
-            Portfolio
-          </a>
+      <nav className="container-page flex h-16 items-center justify-between">
+        <a href="#home" className="font-medium tracking-tight">
+          {PROFILE.name}
+        </a>
 
-          {/* Navigation Desktop */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-muted dark:text-muted hover:text-brand transition-colors cursor-pointer relative after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-0.5 after:bg-brand after:transition-all after:duration-300 hover:after:w-full"
-              >
-                {item.name}
-              </a>
-            ))}
-
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-brand-tint dark:bg-brand-tint hover:opacity-70 transition-opacity cursor-pointer"
-              aria-label="Toggle dark mode"
+        <div className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="text-sm text-fg-muted transition-colors hover:text-fg"
             >
-              {theme === "light" ? (
-                <Moon className="w-5 h-5" />
-              ) : (
-                <Sun className="w-5 h-5" />
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-brand-tint dark:bg-brand-tint cursor-pointer hover:opacity-70 transition-opacity"
-              aria-label="Toggle dark mode"
-            >
-              {theme === "light" ? (
-                <Moon className="w-5 h-5" />
-              ) : (
-                <Sun className="w-5 h-5" />
-              )}
-            </button>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 cursor-pointer hover:opacity-70 transition-opacity"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
+              {item.name}
+            </a>
+          ))}
+          {themeButton}
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 bg-surface dark:bg-surface backdrop-blur-md rounded-lg p-4 shadow-lg">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 px-2 rounded-md text-muted dark:text-muted hover:text-brand hover:bg-brand-tint dark:hover:bg-brand-tint transition-all cursor-pointer border-b border-brand last:border-0"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        )}
+        <div className="flex items-center gap-1 md:hidden">
+          {themeButton}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="rounded-md p-2 text-fg-muted transition-colors hover:text-fg"
+            aria-label="Menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
+        </div>
       </nav>
+
+      {isMobileMenuOpen && (
+        <div id="mobile-menu" className="container-page pb-4 md:hidden">
+          {navItems.map((item) => (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block border-b border-line py-3 text-fg-muted transition-colors last:border-0 hover:text-fg"
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
+      )}
     </header>
   );
 }

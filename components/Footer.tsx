@@ -2,6 +2,7 @@
 
 import { Heart, Github, Linkedin, Mail } from "lucide-react";
 import { AVAILABILITY } from "@/lib/availability";
+import { PROFILE } from "@/content/profile";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -29,17 +30,17 @@ export default function Footer() {
               className="space-y-2 text-sm"
               style={{ color: "var(--color-text-muted-dark)" }}
             >
-              {["experience", "achievements", "skills", "contact"].map(
+              {["projects", "journey", "skills", "contact"].map(
                 (section) => (
                   <li key={section}>
                     <a
                       href={`#${section}`}
                       className="hover:text-brand transition-colors capitalize"
                     >
-                      {section === "experience"
-                        ? "Expérience"
-                        : section === "achievements"
-                          ? "Réalisations techniques"
+                      {section === "journey"
+                        ? "Parcours"
+                        : section === "projects"
+                          ? "Projets"
                           : section === "skills"
                             ? "Compétences"
                             : "Contact"}
@@ -55,7 +56,7 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/npelcat"
+                  href={PROFILE.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
@@ -67,7 +68,7 @@ export default function Footer() {
                   />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/nadege-pelcat/"
+                  href={PROFILE.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
@@ -79,7 +80,7 @@ export default function Footer() {
                   />
                 </a>
                 <a
-                  href="mailto:pelcat.nd@gmail.com"
+                  href={`mailto:${PROFILE.email}`}
                   className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
                   aria-label="Email"
                 >
@@ -93,7 +94,7 @@ export default function Footer() {
                 className="text-sm"
                 style={{ color: "var(--color-text-muted-dark)" }}
               >
-                Paris, Île-de-France
+                {PROFILE.location}
               </p>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { MapPin, Send } from "lucide-react";
 import { useState } from "react";
 import { AVAILABILITY } from "@/lib/availability";
+import { PROFILE } from "@/content/profile";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -112,7 +113,7 @@ export default function Contact() {
                   label: "Localisation",
                   content: (
                     <p className="text-muted dark:text-muted">
-                      Paris, Île-de-France
+                      {PROFILE.location}
                     </p>
                   ),
                 },
