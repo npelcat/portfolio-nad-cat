@@ -208,6 +208,11 @@ export const projects: Project[] = [
         details:
           "Drizzle ORM avec requêtes paramétrées, CI sur chaque PR (lint, build, tests unitaires), branches dédiées et commits atomiques.",
       },
+      {
+        label: "CMS headless",
+        details:
+          "Strapi déployé sur Koyeb, pour que la cliente gère elle-même son contenu.",
+      },
     ],
     tags: [
       "Next.js",
@@ -218,6 +223,9 @@ export const projects: Project[] = [
       "Zod",
       "Drizzle ORM",
       "Cloudflare Turnstile",
+      "GitHub Actions",
+      "Strapi",
+      "Koyeb",
     ],
     screenshot: {
       src: "/dashboardlocal.jpg",

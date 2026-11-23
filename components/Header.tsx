@@ -7,7 +7,7 @@ import { PROFILE } from "@/content/profile";
 
 const navItems = [
   { name: "Projets", href: "#projects" },
-  { name: "Parcours", href: "#experience" },
+  { name: "Parcours", href: "#journey" },
   { name: "Compétences", href: "#skills" },
   { name: "Contact", href: "#contact" },
 ];

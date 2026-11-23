@@ -30,15 +30,15 @@ export default function Footer() {
               className="space-y-2 text-sm"
               style={{ color: "var(--color-text-muted-dark)" }}
             >
-              {["experience", "projects", "skills", "contact"].map(
+              {["projects", "journey", "skills", "contact"].map(
                 (section) => (
                   <li key={section}>
                     <a
                       href={`#${section}`}
                       className="hover:text-brand transition-colors capitalize"
                     >
-                      {section === "experience"
-                        ? "Expérience"
+                      {section === "journey"
+                        ? "Parcours"
                         : section === "projects"
                           ? "Projets"
                           : section === "skills"

@@ -145,7 +145,8 @@ export default function Projects() {
               </h3>
 
               {/* Animating grid rows from 0fr to 1fr lets the panel grow to its real height.
-                  overflow-clip (not hidden) hides the overflow without breaking the sticky image. */}
+                  overflow-clip (not hidden) hides the overflow without breaking the sticky image,
+                  but unlike hidden it keeps the content height as minimum, so min-h-0 is needed to close. */}
               <div
                 id={panelId}
                 role="region"
@@ -155,7 +156,7 @@ export default function Projects() {
                   isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                 }`}
               >
-                <div className="overflow-clip">
+                <div className="min-h-0 overflow-clip">
                   <ProjectDetails project={project} />
                 </div>
               </div>
