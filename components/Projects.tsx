@@ -121,7 +121,10 @@ export default function Projects() {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="group flex w-full items-baseline gap-4 py-6 text-left md:gap-8"
                 >
-                  <span className="w-8 shrink-0 font-mono text-xs text-accent">
+                  <span
+                    className="w-8 shrink-0 font-mono text-xs text-accent"
+                    aria-hidden="true"
+                  >
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="flex-1">
