@@ -56,7 +56,7 @@ const links = [
 ];
 
 const inputClass =
-  "w-full rounded-md border border-line bg-surface px-4 py-3 text-fg transition-colors placeholder:text-fg-muted hover:border-fg-muted";
+  "w-full rounded-md border border-fg-muted/70 bg-surface px-4 py-3 text-fg transition-colors placeholder:text-fg-muted hover:border-fg";
 
 export default function Contact() {
   const [formData, setFormData] = useState(emptyForm);

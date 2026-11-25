@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AVAILABILITY } from "@/lib/availability";
+import { PROFILE } from "@/content/profile";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({
@@ -10,13 +11,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const title = `${PROFILE.name} · ${PROFILE.role}`;
+const description = `${PROFILE.role} : React, TypeScript, Python, NestJS. ${PROFILE.tagline} ${AVAILABILITY.next}.`;
+
 export const metadata: Metadata = {
-  title: "Portfolio Nadège PELCAT - Développeuse Fullstack",
-  icons: {
-    icon: "/icons/favicon-32x32.png",
-    apple: "/icons/apple-touch-icon.png",
-  },
-  description: `Portfolio de développeuse fullstack spécialisée en React, TypeScript, Python et NestJS. ${AVAILABILITY.next}.`,
+  // The site redirects nadegepelcat.com to the www address, so www is the canonical one.
+  metadataBase: new URL("https://www.nadegepelcat.com"),
+  title,
+  description,
   keywords: [
     "développeuse",
     "fullstack",
@@ -27,13 +29,19 @@ export const metadata: Metadata = {
     "Next.js",
     "portfolio",
   ],
-  authors: [{ name: "Nadège Pelcat" }],
+  authors: [{ name: PROFILE.name }],
   openGraph: {
-    title:
-      "Portfolio Nadège PELCAT - Développeuse Fullstack Paris et Région Parisienne",
-    description:
-      "Développeuse fullstack passionnée par les technologies web modernes",
+    title,
+    description,
+    url: "/",
+    siteName: PROFILE.name,
+    locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
   },
 };
 

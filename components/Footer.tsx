@@ -1,114 +1,36 @@
-"use client";
-
-import { Heart, Github, Linkedin, Mail } from "lucide-react";
-import { AVAILABILITY } from "@/lib/availability";
 import { PROFILE } from "@/content/profile";
 
+const links = [
+  { label: "GitHub", href: PROFILE.links.github },
+  { label: "LinkedIn", href: PROFILE.links.linkedin },
+  { label: "Email", href: `mailto:${PROFILE.email}` },
+];
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  // Computed at build time: the year updates with the next deployment.
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-surface-dark text-text-dark py-12">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">
-              Développeuse Fullstack
-            </h3>
-            <p
-              className="text-sm"
-              style={{ color: "var(--color-text-muted-dark)" }}
-            >
-              Passionnée par le développement web et la création
-              d&apos;applications performantes. {AVAILABILITY.current}.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">Navigation</h3>
-            <ul
-              className="space-y-2 text-sm"
-              style={{ color: "var(--color-text-muted-dark)" }}
-            >
-              {["projects", "journey", "skills", "contact"].map(
-                (section) => (
-                  <li key={section}>
-                    <a
-                      href={`#${section}`}
-                      className="hover:text-brand transition-colors capitalize"
-                    >
-                      {section === "journey"
-                        ? "Parcours"
-                        : section === "projects"
-                          ? "Projets"
-                          : section === "skills"
-                            ? "Compétences"
-                            : "Contact"}
-                    </a>
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-white font-bold text-lg mb-4">Contact</h3>
-            <div className="space-y-3">
-              <div className="flex gap-4">
-                <a
-                  href={PROFILE.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
-                  aria-label="GitHub"
-                >
-                  <Github
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  />
-                </a>
-                <a
-                  href={PROFILE.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  />
-                </a>
-                <a
-                  href={`mailto:${PROFILE.email}`}
-                  className="p-2 bg-brand-tint hover:opacity-80 rounded-lg transition-opacity"
-                  aria-label="Email"
-                >
-                  <Mail
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  />
-                </a>
-              </div>
-              <p
-                className="text-sm"
-                style={{ color: "var(--color-text-muted-dark)" }}
+    <footer className="container-page">
+      <div className="flex flex-col gap-4 border-t border-line py-8 text-sm text-fg-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {year} {PROFILE.name}
+        </p>
+        <ul className="flex gap-6">
+          {links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                {...(link.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className="transition-colors hover:text-fg"
               >
-                {PROFILE.location}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="pt-8 border-t border-brand text-center text-sm"
-          style={{ color: "var(--color-text-muted-dark)" }}
-        >
-          <p className="flex items-center justify-center gap-2">
-            Créé avec <Heart className="w-4 h-4 text-red-500 fill-current" /> et
-            Next.js • {currentYear}
-          </p>
-        </div>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );
