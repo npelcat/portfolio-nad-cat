@@ -1,25 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { PROFILE } from "@/content/profile";
+import { contactSchema } from "@/lib/contact-schema";
+import { escapeHtml } from "@/lib/escape-html";
 
 export async function POST(request: NextRequest) {
+  let body: unknown;
   try {
-    const body = await request.json();
-    const { name, email, subject, message } = body;
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Requête invalide" }, { status: 400 });
+  }
 
-    // Validation des champs
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: "Tous les champs sont requis" },
-        { status: 400 },
-      );
-    }
+  const result = contactSchema.safeParse(body);
+  if (!result.success) {
+    return NextResponse.json(
+      { error: "Champs invalides ou manquants" },
+      { status: 400 },
+    );
+  }
 
-    // Envoi de l'email via Resend
-    const data = await resend.emails.send({
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is missing");
+    return NextResponse.json(
+      { error: "Erreur lors de l'envoi de l'email" },
+      { status: 500 },
+    );
+  }
+
+  const { name, email, subject, message } = result.data;
+  const safe = {
+    name: escapeHtml(name),
+    email: escapeHtml(email),
+    subject: escapeHtml(subject),
+    message: escapeHtml(message),
+  };
+
+  try {
+    // Created here and not at the top of the file, so the build does not need the key.
+    const resend = new Resend(apiKey);
+    // send() does not throw when Resend refuses the email: it returns an error object.
+    const { error } = await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
-      to: ["pelcat.nd@gmail.com"],
+      to: [PROFILE.email],
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
       html: `
@@ -73,17 +97,17 @@ export async function POST(request: NextRequest) {
               </div>
               <div class="content">
                 <div class="info-row">
-                  <span class="label">De :</span> ${name}
+                  <span class="label">De :</span> ${safe.name}
                 </div>
                 <div class="info-row">
-                  <span class="label">Email :</span> ${email}
+                  <span class="label">Email :</span> ${safe.email}
                 </div>
                 <div class="info-row">
-                  <span class="label">Sujet :</span> ${subject}
+                  <span class="label">Sujet :</span> ${safe.subject}
                 </div>
                 <div class="message-box">
                   <p style="margin-top: 0;"><span class="label">Message :</span></p>
-                  <p style="white-space: pre-wrap;">${message}</p>
+                  <p style="white-space: pre-wrap;">${safe.message}</p>
                 </div>
               </div>
             </div>
@@ -92,12 +116,17 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    return NextResponse.json(
-      { message: "Email envoyé avec succès", data },
-      { status: 200 },
-    );
+    if (error) {
+      console.error("Resend refused the email:", error);
+      return NextResponse.json(
+        { error: "Erreur lors de l'envoi de l'email" },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({ message: "Email envoyé" }, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de l'envoi de l'email:", error);
+    console.error("Error while sending the email:", error);
     return NextResponse.json(
       { error: "Erreur lors de l'envoi de l'email" },
       { status: 500 },
