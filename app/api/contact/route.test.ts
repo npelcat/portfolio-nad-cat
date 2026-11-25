@@ -54,6 +54,14 @@ describe("POST /api/contact", () => {
     expect(send).not.toHaveBeenCalled();
   });
 
+  it("returns 200 without sending the email when the honeypot is filled", async () => {
+    const response = await POST(
+      postRequest(JSON.stringify({ ...valid, website: "https://spam.example" })),
+    );
+    expect(response.status).toBe(200);
+    expect(send).not.toHaveBeenCalled();
+  });
+
   it("returns 200 without data when the email is sent", async () => {
     const response = await POST(postRequest(JSON.stringify(valid)));
     expect(response.status).toBe(200);

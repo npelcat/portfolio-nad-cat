@@ -92,6 +92,22 @@
   }
 }
 
+/* Draws an SVG stroke. The path needs pathLength="1" so the dash values work whatever its real length. */
+@keyframes draw-check {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@utility animate-draw-check {
+  stroke-dasharray: 1;
+  animation: draw-check 450ms ease-out 100ms both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
 /* ─── Legacy ───
    Names used by the old components, mapped onto the new tokens.
    Delete each one when the last component using it is rewritten. */

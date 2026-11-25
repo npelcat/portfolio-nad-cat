@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { CONTACT_LIMITS } from "./contact-limits";
 import { contactSchema } from "./contact-schema";
 
 const valid = {
@@ -29,15 +30,15 @@ describe("contactSchema", () => {
   });
 
   it("refuses fields that are too long", () => {
-    expect(
-      contactSchema.safeParse({ ...valid, name: "a".repeat(101) }).success,
-    ).toBe(false);
-    expect(
-      contactSchema.safeParse({ ...valid, subject: "a".repeat(151) }).success,
-    ).toBe(false);
-    expect(
-      contactSchema.safeParse({ ...valid, message: "a".repeat(5001) }).success,
-    ).toBe(false);
+    for (const field of ["name", "subject", "message"] as const) {
+      const atLimit = "a".repeat(CONTACT_LIMITS[field]);
+      expect(contactSchema.safeParse({ ...valid, [field]: atLimit }).success).toBe(
+        true,
+      );
+      expect(
+        contactSchema.safeParse({ ...valid, [field]: `${atLimit}a` }).success,
+      ).toBe(false);
+    }
   });
 
   it("refuses line breaks in name and subject", () => {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { PROFILE } from "@/content/profile";
+import { HONEYPOT_FIELD } from "@/lib/contact-limits";
 import { contactSchema } from "@/lib/contact-schema";
 import { escapeHtml } from "@/lib/escape-html";
 
@@ -18,6 +19,11 @@ export async function POST(request: NextRequest) {
       { error: "Champs invalides ou manquants" },
       { status: 400 },
     );
+  }
+
+  // A filled honeypot means a bot: answer as if it worked, so it does not try another way.
+  if (result.data[HONEYPOT_FIELD]) {
+    return NextResponse.json({ message: "Email envoyé" }, { status: 200 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
